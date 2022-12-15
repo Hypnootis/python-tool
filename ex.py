@@ -26,18 +26,28 @@ def move_files(files: list):
 
 
 def split_files(files: list, destination: str):
+    copy_files = files
     # Split files
     index = 0
     validation, train = [], []
     # split_index = int(random.randint(0, len(files) - (len(files) * 0.2) )) # TODO: Don't assume that each file has a pair
-    split_index = len(files) * 0.2
-    for file in files:
-        if files.index(file) < split_index:
+    split_index = len(copy_files) * 0.2
+    for file in copy_files:
+        copy_file = file.split('.')[0]
+        if copy_files.index(file) < split_index:
+            """
+            shutil.move(f"images/")
             shutil.move(f"{destination}/{file}", f"{destination}/test/")
             print(f"Moved {file} to test")
         else:
             shutil.move(f"{destination}/{file}", f"{destination}/train/")
             print(f"Moved {file} to train")
+            """ 
+            shutil.move(f"images/{copy_file}.jpg", f"images/test/")
+            shutil.move(f"labels/{copy_file}.txt", f"labels/test/")
+        else:
+            shutil.move(f"images/{copy_file}.jpg", f"images/train/")
+            shutil.move(f"labels/{copy_file}.txt", f"labels/train/")
 
 
 move_files(data_files)
@@ -49,6 +59,5 @@ kusi.remove("test")
 kusi.remove("train")
 paska.remove("test")
 paska.remove("train")
-print(paska)
 split_files(paska, "images")
 split_files(kusi, "labels")
