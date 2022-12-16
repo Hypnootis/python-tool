@@ -1,11 +1,11 @@
 import os, shutil
-
+# TODO: Add some tests!
 data_path = "data/" # Relative path
 # TODO: entrypoint for program
 
 data_files = os.listdir(data_path)
 # Data should be a pair of jpg/txt files! Maybe add support for other filetypes or remove filetype dependency
-def move_files(files: list):
+def move_files(files: list): # TODO: Make directory if it doesn't exist...
     if len(files) != 0:
         for file in files:
             if f"{file.split('.')[0]}.txt" in files and f"{file.split('.')[0]}.jpg" in files:
