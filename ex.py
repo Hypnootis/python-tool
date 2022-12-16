@@ -1,12 +1,10 @@
-import os, shutil, random
+import os, shutil
 
 data_path = "data/" # Relative path
+# TODO: entrypoint for program
 
 data_files = os.listdir(data_path)
-
-new_file = {"name": "", "type": ""} # Type is 'test' or 'train'
-
-# Split is for test/train, i.e. a value of 0.8 means a 80/20 split
+# Data should be a pair of jpg/txt files! Maybe add support for other filetypes or remove filetype dependency
 def move_files(files: list):
     if len(files) != 0:
         for file in files:
@@ -22,32 +20,21 @@ def move_files(files: list):
     else:
         print("Directory is empty!")
 
-        # sorted_file = {"name": file, "type": ""}    
-
-
-def split_files(files: list, destination: str):
-    copy_files = files
-    # Split files
+# Labels and images have the same name but different filetype by design
+def split_files(files: list):
+    copy_files = files # For getting the split version
     index = 0
     validation, train = [], []
-    # split_index = int(random.randint(0, len(files) - (len(files) * 0.2) )) # TODO: Don't assume that each file has a pair
     split_index = len(copy_files) * 0.2
     for file in copy_files:
         copy_file = file.split('.')[0]
         if copy_files.index(file) < split_index:
-            """
-            shutil.move(f"images/")
-            shutil.move(f"{destination}/{file}", f"{destination}/test/")
-            print(f"Moved {file} to test")
-        else:
-            shutil.move(f"{destination}/{file}", f"{destination}/train/")
-            print(f"Moved {file} to train")
-            """ 
             shutil.move(f"images/{copy_file}.jpg", f"images/test/")
             shutil.move(f"labels/{copy_file}.txt", f"labels/test/")
         else:
             shutil.move(f"images/{copy_file}.jpg", f"images/train/")
             shutil.move(f"labels/{copy_file}.txt", f"labels/train/")
+    print("Done splitting files")
 
 
 move_files(data_files)
@@ -55,6 +42,7 @@ move_files(data_files)
     
 paska = os.listdir("images/")
 kusi = os.listdir("labels/")
+# Ignore the test/train folders TODO: refactor this
 kusi.remove("test")
 kusi.remove("train")
 paska.remove("test")
