@@ -1,7 +1,22 @@
-import os, shutil
+import os, shutil, sys
+
+def main():
+    # TODO: Command line args
+    create_folders()
+    move_files(data_files)
+
+    
+    images_folder = os.listdir("images/")
+    labels_folder = os.listdir("labels/")
+    # Ignore the test/train folders TODO: refactor this
+    images_folder.remove("test")
+    images_folder.remove("train")
+    labels_folder.remove("test")
+    labels_folder.remove("train")
+    split_files(images_folder)
+    split_files(labels_folder)
 
 data_path = "data/" # Relative path
-# TODO: entrypoint for program
 
 data_files = os.listdir(data_path)
 # Data should be a pair of jpg/txt files! Maybe add support for other filetypes or remove filetype dependency
@@ -44,16 +59,5 @@ def split_files(files: list):
             shutil.move(f"labels/{split_file}.txt", f"labels/train/")
     print("Done splitting files")
 
-create_folders()
-move_files(data_files)
-
-    
-images_folder = os.listdir("images/")
-labels_folder = os.listdir("labels/")
-# Ignore the test/train folders TODO: refactor this
-images_folder.remove("test")
-images_folder.remove("train")
-labels_folder.remove("test")
-labels_folder.remove("train")
-split_files(images_folder)
-split_files(labels_folder)
+if __name__ == "__main__":
+    main()
