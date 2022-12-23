@@ -19,7 +19,7 @@ def main():
 data_path = "data/" # Relative path
 
 data_files = os.listdir(data_path)
-# Data should be a pair of jpg/txt files! Maybe add support for other filetypes or remove filetype dependency
+
 def create_folders():
     try:
         os.makedirs("images/test")
@@ -34,10 +34,10 @@ def move_files(files: list):
     if len(files) != 0:
         for file in copied_files:
             if f"{file.split('.')[0]}.txt" in files:
-                if file.endswith(".jpg"): 
-                    shutil.move(f"{data_path}{file}", f"images/")
-                else:
+                if file.endswith(".txt"): 
                     shutil.move(f"{data_path}{file}", f"labels/")
+                else:
+                    shutil.move(f"{data_path}{file}", f"images/")
             else:
                 print(f"{file} is missing a label/image!")
                 continue
