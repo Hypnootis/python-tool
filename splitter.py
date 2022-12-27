@@ -51,7 +51,7 @@ def move_files(files: list, path: str):
 # Labels and images have the same name but different filetype by design
 def split_files(files: list):
     copy_files = files # For getting the split version
-    split_index = len(copy_files) * 0.2 # Move 20% of the files for testing
+    split_index = int(len(copy_files) * 0.2) # Move 20% of the files for testing, modify the decimal for a different split!
     for file in copy_files:
         split_file = file.split('.')[0]
         if copy_files.index(file) < split_index:
